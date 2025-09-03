@@ -1,7 +1,10 @@
-import { clerkMiddleware } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
 
-// Temporarily disable auth protection for development
-export default clerkMiddleware()
+// Simple middleware for demo mode - no auth required
+export function middleware() {
+  // Allow all requests to pass through in demo mode
+  return NextResponse.next()
+}
 
 export const config = {
   matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
