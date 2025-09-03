@@ -5,17 +5,26 @@ import { prisma } from '@/lib/prisma'
 export default async function DashboardPage() {
   const userWithUsage = await getUserWithUsage()
   
-  const projects = await prisma.project.findMany({
-    where: { userId: userWithUsage.id },
-    include: {
-      shots: {
-        include: {
-          frames: true
+  // Demo mode - return mock projects instead of database query
+  const projects = [
+    {
+      id: 'demo-project-1',
+      title: 'Sample Action Scene',
+      description: 'A thrilling car chase through downtown',
+      style: 'realistic',
+      shots: [
+        {
+          id: 'shot-1',
+          frames: [{ id: 'frame-1' }, { id: 'frame-2' }]
+        },
+        {
+          id: 'shot-2', 
+          frames: [{ id: 'frame-3' }]
         }
-      }
-    },
-    orderBy: { updatedAt: 'desc' }
-  })
+      ],
+      updatedAt: new Date()
+    }
+  ]
 
   const usagePercentage = {
     frames: (userWithUsage.framesUsedMonth / userWithUsage.limits.frames) * 100,

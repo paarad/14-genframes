@@ -56,18 +56,9 @@ export default function PricingPage() {
               </li>
             </ul>
 
-            <SignedOut>
-              <SignInButton mode="modal">
-                <button className="w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors">
-                  Get Started Free
-                </button>
-              </SignInButton>
-            </SignedOut>
-            <SignedIn>
-              <Link href="/app" className="w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors block text-center">
-                Go to Dashboard
-              </Link>
-            </SignedIn>
+            <Link href="/app" className="w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors block text-center">
+              Try Free Demo
+            </Link>
           </div>
 
           {/* Pro Plan */}

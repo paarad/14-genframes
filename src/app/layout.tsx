@@ -1,23 +1,20 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff2",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff2",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
   title: "GenFrames - From Script to Storyboard in Minutes",
   description: "AI-powered storyboard generation from scripts",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
@@ -29,7 +26,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${inter.variable} font-sans antialiased`}
         >
           <nav className="border-b bg-white/80 backdrop-blur-sm">
             <div className="container mx-auto px-4 py-3 flex items-center justify-between">
@@ -37,22 +34,18 @@ export default function RootLayout({
                 GenFrames
               </Link>
               <div className="flex items-center gap-4">
+                <Link href="/create" className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors">
+                  🎬 Create
+                </Link>
+                <Link href="/test-api" className="text-sm text-muted-foreground hover:text-foreground">
+                  🧪 API Test
+                </Link>
                 <Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground">
                   Pricing
                 </Link>
-                <SignedOut>
-                  <SignInButton mode="modal">
-                    <button className="bg-black text-white px-4 py-2 rounded-md text-sm hover:bg-gray-800">
-                      Sign In
-                    </button>
-                  </SignInButton>
-                </SignedOut>
-                <SignedIn>
-                  <Link href="/app" className="text-sm text-muted-foreground hover:text-foreground">
-                    Dashboard
-                  </Link>
-                  <UserButton afterSignOutUrl="/" />
-                </SignedIn>
+                <div className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">
+                  MVP Demo
+                </div>
               </div>
             </div>
           </nav>

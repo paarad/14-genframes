@@ -2,29 +2,24 @@ import { currentUser } from '@clerk/nextjs/server'
 import { prisma } from './prisma'
 
 export async function getOrCreateUser() {
-  const clerkUser = await currentUser()
-  
-  if (!clerkUser) {
-    throw new Error('User not authenticated')
+  // Demo mode - return a mock user for development
+  const demoUser = {
+    id: 'demo-user-id',
+    clerkId: 'demo-clerk-id',
+    email: 'demo@genframes.io',
+    firstName: 'Demo',
+    lastName: 'User',
+    plan: 'FREE' as const,
+    framesUsedMonth: 5,
+    shotsUsedMonth: 3,
+    periodStartAt: new Date(),
+    subscriptionId: null,
+    customerId: null,
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 
-  let user = await prisma.user.findUnique({
-    where: { clerkId: clerkUser.id }
-  })
-
-  if (!user) {
-    user = await prisma.user.create({
-      data: {
-        clerkId: clerkUser.id,
-        email: clerkUser.emailAddresses[0]?.emailAddress || '',
-        firstName: clerkUser.firstName,
-        lastName: clerkUser.lastName,
-        plan: 'FREE'
-      }
-    })
-  }
-
-  return user
+  return demoUser
 }
 
 export async function getUserWithUsage() {
@@ -36,7 +31,7 @@ export async function getUserWithUsage() {
       projects: user.plan === 'FREE' ? 1 : Infinity,
       shots: user.plan === 'FREE' ? 10 : 300,
       frames: user.plan === 'FREE' ? 20 : 300,
-      hiRes: user.plan === 'PRO'
+      hiRes: user.plan !== 'FREE'
     }
   }
 } 

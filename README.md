@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GenFrames 🎬
 
-## Getting Started
+**From Script to Storyboard in Minutes** - AI-powered storyboard generation from scripts.
 
-First, run the development server:
+Transform your scenes into visual storyboards with AI. Parse scripts, generate frames, and export professional boards instantly.
 
+## ✨ Features
+
+- **🎬 Smart Parsing**: AI understands your script and breaks it into shots with camera angles and actions
+- **🎨 Multiple Styles**: Generate frames in realistic, pencil, noir, anime, or meme styles  
+- **📄 Pro Export**: Export as PDF boards or horizontal strips (Pro: watermark-free)
+- **🔄 Re-roll Frames**: Don't like a frame? Generate alternatives instantly
+- **💎 Seed Lock**: Pro users can reproduce exact frames with seed values
+
+## 🚀 Quick Start
+
+### 1. Clone and Install
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/paarad/14-genframes.git
+cd 14-genframes
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Environment Setup
+Copy `.env.example` to `.env` and add your API keys:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Database
+DATABASE_URL="file:./dev.db"
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# OpenAI (Required for AI features)
+OPENAI_API_KEY=sk-your_openai_api_key
 
-## Learn More
+# Clerk Authentication (Optional - demo mode works without)
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_your_clerk_publishable_key
+CLERK_SECRET_KEY=sk_test_your_clerk_secret_key
 
-To learn more about Next.js, take a look at the following resources:
+# Lemon Squeezy (Optional - for payments)
+LEMONSQUEEZY_API_KEY=your_lemonsqueezy_api_key
+LEMONSQUEEZY_STORE_ID=your_store_id
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Database Setup
+```bash
+npx prisma migrate dev --name init
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Run Development Server
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+Visit [http://localhost:3000](http://localhost:3000) to start creating!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧪 Testing the API
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Demo Mode**: Visit the app without any setup - works with mock data
+2. **API Test Lab**: Go to `/test-api` to test OpenAI integration
+3. **Script Parsing**: Paste a scene script and watch GPT-4 break it into shots
+4. **Frame Generation**: Click any shot to generate a storyboard frame with DALL-E
+
+## 📚 API Endpoints
+
+### Script Parsing
+```bash
+POST /api/parse
+Content-Type: application/json
+
+{
+  "script": "Your scene description...",
+  "style": "realistic"
+}
+```
+
+### Frame Generation  
+```bash
+POST /api/frame
+Content-Type: application/json
+
+{
+  "shotDescription": "Wide shot of downtown street with traffic",
+  "camera": "Wide shot", 
+  "style": "realistic",
+  "title": "Opening Scene"
+}
+```
+
+## 💰 Pricing Tiers
+
+- **Free**: 1 project, 10 shots, 20 frames, low-res export
+- **Pro (€9/mo)**: Unlimited projects, 300 frames/month, hi-res export, seed lock, no watermarks
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 14, TailwindCSS, shadcn/ui
+- **Backend**: Next.js API Routes, Prisma ORM
+- **Database**: SQLite (dev) / PostgreSQL (prod)  
+- **AI**: OpenAI GPT-4o + DALL-E 3
+- **Auth**: Clerk
+- **Payments**: Lemon Squeezy
+- **Deployment**: Vercel
+
+## 🔐 Content Safety
+
+- Automatic content filtering for NSFW/inappropriate content
+- Brand name and celebrity substitution
+- Satirical watermark for meme-style generations
+- OpenAI content policy compliance
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+---
+
+**Ready to bring your stories to life?** Start creating at [GenFrames.io](https://genframes.io) 🎬
