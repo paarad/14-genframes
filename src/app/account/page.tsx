@@ -76,7 +76,7 @@ export default async function AccountPage() {
                 </div>
               </div>
 
-              {userWithUsage.plan === 'PRO' && (
+              {userWithUsage.plan !== 'FREE' && (
                 <div className="mt-4 pt-4 border-t">
                   <div className="text-sm text-gray-600">
                     Next billing period starts: {new Date(userWithUsage.periodStartAt).toLocaleDateString()}
@@ -168,7 +168,7 @@ export default async function AccountPage() {
                   {userWithUsage.limits.hiRes ? 'Hi-res' : 'Low-res'} export
                 </span>
               </div>
-              {userWithUsage.plan === 'PRO' && (
+              {userWithUsage.plan !== 'FREE' && (
                 <>
                   <div className="flex items-center">
                     <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">

@@ -1,5 +1,6 @@
-import { currentUser } from '@clerk/nextjs/server'
-import { prisma } from './prisma'
+// Removed unused imports for demo mode
+// import { currentUser } from '@clerk/nextjs/server'
+// import { prisma } from './prisma'
 
 export async function getOrCreateUser() {
   // Demo mode - return a mock user for development

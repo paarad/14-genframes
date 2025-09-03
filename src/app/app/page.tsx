@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { getUserWithUsage } from '@/lib/user'
-import { prisma } from '@/lib/prisma'
+// import { prisma } from '@/lib/prisma' // Unused in demo mode
 
 export default async function DashboardPage() {
   const userWithUsage = await getUserWithUsage()

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { openai, FrameRequest, FrameResponse } from '@/lib/openai'
+import { openai } from '@/lib/openai'
 import { z } from 'zod'
 
 const FrameRequestSchema = z.object({
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
     // Generate a seed for reproducibility (Pro feature)
     const generatedSeed = seed || Math.random().toString(36).substring(2, 15)
 
-    const response: FrameResponse = {
+    const response = {
       imageUrl,
       prompt: enhancedPrompt,
       seed: generatedSeed

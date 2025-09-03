@@ -3,12 +3,24 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
+interface Shot {
+  title: string
+  action: string
+  camera: string
+  duration: string
+}
+
+interface Frame {
+  imageUrl: string
+  prompt: string
+}
+
 export default function CreateStoryboardPage() {
   const [currentStep, setCurrentStep] = useState(1) // 1: Script Input, 2: Shots, 3: Frames
   const [script, setScript] = useState('')
   const [style, setStyle] = useState('realistic')
-  const [shots, setShots] = useState([])
-  const [frames, setFrames] = useState({})
+  const [shots, setShots] = useState<Shot[]>([])
+  const [frames, setFrames] = useState<{[key: number]: Frame}>({})
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState('')
 
@@ -58,7 +70,7 @@ Alex slams on the accelerator. The car leaps forward, tires screeching as it tak
     }
   }
 
-  const handleGenerateFrame = async (shot: any, shotIndex: number) => {
+  const handleGenerateFrame = async (shot: Shot, shotIndex: number) => {
     setIsProcessing(true)
     setError('')
     
@@ -66,9 +78,9 @@ Alex slams on the accelerator. The car leaps forward, tires screeching as it tak
     let previousContext = ''
     if (shotIndex > 0) {
       const contextShots = shots.slice(Math.max(0, shotIndex - 2), shotIndex) // Look at last 1-2 shots
-      const contextParts = []
+      const contextParts: string[] = []
       
-      contextShots.forEach((s: any) => {
+      contextShots.forEach((s: Shot) => {
         const action = s.action.toLowerCase()
         
         // Emotional states
@@ -171,7 +183,7 @@ Alex slams on the accelerator. The car leaps forward, tires screeching as it tak
             <p>Generated on ${new Date().toLocaleString()}</p>
           </div>
           <div class="storyboard">
-            ${frameEntries.map(([shotIndex, frame]: [string, any]) => {
+            ${frameEntries.map(([shotIndex, frame]: [string, Frame]) => {
               const shotNum = parseInt(shotIndex) + 1
               const shot = shots[parseInt(shotIndex)]
               return `
@@ -206,7 +218,7 @@ Alex slams on the accelerator. The car leaps forward, tires screeching as it tak
       URL.revokeObjectURL(url)
 
       // Also open individual frames in new tabs as backup
-      frameEntries.forEach(([shotIndex, frame]: [string, any], index) => {
+      frameEntries.forEach(([, frame]: [string, Frame], index) => {
         if (frame?.imageUrl) {
           setTimeout(() => {
             window.open(frame.imageUrl, '_blank')
@@ -218,7 +230,7 @@ Alex slams on the accelerator. The car leaps forward, tires screeching as it tak
       alert('Export failed. Opening frames in new tabs instead.')
       
       // Fallback: open frames in tabs
-      frameEntries.forEach(([shotIndex, frame]: [string, any], index) => {
+      frameEntries.forEach(([, frame]: [string, Frame], index) => {
         if (frame?.imageUrl) {
           setTimeout(() => {
             window.open(frame.imageUrl, '_blank')
@@ -364,7 +376,7 @@ Alex slams on the accelerator. The car leaps forward, tires screeching as it tak
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              {shots.map((shot: any, index) => (
+              {shots.map((shot: Shot, index) => (
                 <div key={index} className="border rounded-lg p-4">
                   <div className="flex items-start justify-between mb-2">
                     <div className="font-medium text-gray-900">
@@ -400,7 +412,7 @@ Alex slams on the accelerator. The car leaps forward, tires screeching as it tak
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {shots.map((shot: any, index) => (
+              {shots.map((shot: Shot, index) => (
                 <div key={index} className="border rounded-lg overflow-hidden">
                   <div className="bg-gray-100 aspect-video flex items-center justify-center">
                     {frames[index] ? (

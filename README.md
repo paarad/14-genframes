@@ -55,7 +55,7 @@ Visit [http://localhost:3000](http://localhost:3000) to start creating!
 ## 🧪 Testing the API
 
 1. **Demo Mode**: Visit the app without any setup - works with mock data
-2. **API Test Lab**: Go to `/test-api` to test OpenAI integration
+2. **Dashboard**: Go to `/app` to view your projects and account
 3. **Script Parsing**: Paste a scene script and watch GPT-4 break it into shots
 4. **Frame Generation**: Click any shot to generate a storyboard frame with DALL-E
 

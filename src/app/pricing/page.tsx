@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs'
+// Removed unused Clerk imports for demo mode
 
 export default function PricingPage() {
   return (

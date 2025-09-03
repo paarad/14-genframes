@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { openai, Shot } from '@/lib/openai'
+import { openai } from '@/lib/openai'
 import { z } from 'zod'
 
 const ParseRequestSchema = z.object({
@@ -21,7 +21,7 @@ const ParseResponseSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { script, style } = ParseRequestSchema.parse(body)
+    const { script } = ParseRequestSchema.parse(body)
 
     // Create a comprehensive prompt for GPT-4 to parse the script
     const prompt = `You are a professional storyboard artist and script supervisor. Parse the following scene script into individual shots for a storyboard.
@@ -91,7 +91,7 @@ ${script}`
       }
       
       parsedResponse = JSON.parse(jsonText)
-    } catch (error) {
+    } catch {
       console.error('Failed to parse OpenAI response:', responseText)
       
       // Fallback: Create a simple breakdown if JSON parsing fails

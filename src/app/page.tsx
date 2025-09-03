@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs'
+// Removed unused Clerk imports for demo mode
 
 export default function HomePage() {
   return (
@@ -21,8 +21,8 @@ export default function HomePage() {
             <Link href="/create" className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors inline-block">
               🎬 Create Storyboard Now
             </Link>
-            <Link href="/test-api" className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-50 transition-colors">
-              🧪 Try API Demo
+            <Link href="/app" className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-50 transition-colors">
+              📊 View Dashboard
             </Link>
           </div>
 
